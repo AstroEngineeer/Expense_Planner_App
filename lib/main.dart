@@ -1,3 +1,4 @@
+import 'package:Expense_Planner_App/Transcation.dart';
 import 'package:flutter/material.dart';
 
 void main(List<String> args) {
@@ -15,6 +16,11 @@ class MyApp extends StatelessWidget {
 }
 
 class MyAppHome extends StatelessWidget {
+  List transcations = <Transcation>[
+    Transcation(id: "t1", title: "Pizza", amt: 500, date: DateTime.now()),
+    Transcation(id: "t2", title: "Buger", amt: 100, date: DateTime.now())
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,6 +28,8 @@ class MyAppHome extends StatelessWidget {
         title: Text("Expense Planner"),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
             width: double.infinity,
@@ -30,11 +38,10 @@ class MyAppHome extends StatelessWidget {
               child: Text("Chart"),
             ),
           ),
-          Container(
-            child: Card(
-              child: Text("List"),
-            ),
-          )
+          Column(
+              children: transcations.map((tx) {
+            return Card(child: Text(tx.title));
+          }).toList())
         ],
       ),
     );
