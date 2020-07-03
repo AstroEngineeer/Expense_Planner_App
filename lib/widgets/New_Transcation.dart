@@ -14,7 +14,7 @@ class _NewTranscationState extends State<NewTranscation> {
 
   final titleInput = TextEditingController();
 
-  void Submit() {
+  void submit() {
     final amt = double.parse(amountInput.text);
     if (amt <= 0 || titleInput.text.isEmpty) {
       return;
@@ -33,17 +33,17 @@ class _NewTranscationState extends State<NewTranscation> {
           TextField(
             decoration: InputDecoration(labelText: "Title"),
             controller: titleInput,
-            onSubmitted: (_) => Submit(),
+            onSubmitted: (_) => submit(),
           ),
           TextField(
             decoration: InputDecoration(labelText: "Amount"),
             controller: amountInput,
-            onSubmitted: (_) => Submit(),
+            onSubmitted: (_) => submit(),
             keyboardType: TextInputType.number,
           ),
           FlatButton(
               color: Colors.purple,
-              onPressed: Submit,
+              onPressed: submit,
               child: Text("Add Transcation")),
         ],
       ),

@@ -23,7 +23,7 @@ class MyAppHome extends StatefulWidget {
 }
 
 class _MyAppHomeState extends State<MyAppHome> {
-  final List _Usertranscations = <Transcation>[
+  final List _userTranscations = <Transcation>[
     Transcation(id: "t1", title: "Pizza", amt: 500, date: DateTime.now()),
     Transcation(id: "t2", title: "Buger", amt: 100, date: DateTime.now())
   ];
@@ -36,7 +36,7 @@ class _MyAppHomeState extends State<MyAppHome> {
         date: DateTime.now());
 
     setState(() {
-      _Usertranscations.add(newtx);
+      _userTranscations.add(newtx);
     });
   }
 
@@ -69,7 +69,7 @@ class _MyAppHomeState extends State<MyAppHome> {
               child: Text("Chart"),
             ),
           ),
-          TranscationList(_Usertranscations),
+          TranscationList(_userTranscations),
         ],
       ),
       floatingActionButton: FloatingActionButton(
