@@ -1,18 +1,26 @@
 import 'package:flutter/material.dart';
 
-class NewTranscation extends StatelessWidget {
-  final amountInput = TextEditingController();
-  final titleInput = TextEditingController();
+class NewTranscation extends StatefulWidget {
   final Function addTranscation;
 
   NewTranscation(this.addTranscation);
+
+  @override
+  _NewTranscationState createState() => _NewTranscationState();
+}
+
+class _NewTranscationState extends State<NewTranscation> {
+  final amountInput = TextEditingController();
+
+  final titleInput = TextEditingController();
 
   void Submit() {
     final amt = double.parse(amountInput.text);
     if (amt <= 0 || titleInput.text.isEmpty) {
       return;
     }
-    addTranscation(titleInput.text, amt);
+    widget.addTranscation(titleInput.text, amt);
+    Navigator.of(context).pop();
   }
 
   @override

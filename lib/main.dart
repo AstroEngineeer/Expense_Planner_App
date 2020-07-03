@@ -1,5 +1,7 @@
-import 'package:Expense_Planner_App/widgets/User_Transcation.dart';
 import 'package:flutter/material.dart';
+import './widgets/New_Transcation.dart';
+import 'models/Transcation.dart';
+import './widgets/Transcation_List.dart';
 
 void main(List<String> args) {
   runApp(MyApp());
@@ -15,16 +17,50 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyAppHome extends StatelessWidget {
+class MyAppHome extends StatefulWidget {
+  @override
+  _MyAppHomeState createState() => _MyAppHomeState();
+}
+
+class _MyAppHomeState extends State<MyAppHome> {
+  final List _Usertranscations = <Transcation>[
+    Transcation(id: "t1", title: "Pizza", amt: 500, date: DateTime.now()),
+    Transcation(id: "t2", title: "Buger", amt: 100, date: DateTime.now())
+  ];
+
+  void _addNewTranscation(String title, double amount) {
+    final newtx = Transcation(
+        id: DateTime.now().toString(),
+        title: title,
+        amt: amount,
+        date: DateTime.now());
+
+    setState(() {
+      _Usertranscations.add(newtx);
+    });
+  }
+
+  _startAddNewTranscation(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) {
+        return NewTranscation(_addNewTranscation);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => _startAddNewTranscation(context))
+        ],
         title: Text("Expense Planner"),
       ),
       body: ListView(
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           Container(
             width: double.infinity,
@@ -33,9 +69,14 @@ class MyAppHome extends StatelessWidget {
               child: Text("Chart"),
             ),
           ),
-          UserTranscation()
+          TranscationList(_Usertranscations),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _startAddNewTranscation(context),
+        child: Icon(Icons.add),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
