@@ -46,7 +46,8 @@ class _NewTranscationState extends State<NewTranscation> {
               onPressed: submit,
               child: Text(
                 "Add Transcation",
-                style: TextStyle(color: Colors.black),
+                style:
+                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
               )),
         ],
       ),

@@ -10,50 +10,66 @@ class TranscationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 350,
-      child: ListView.builder(
-          itemCount: transcations.length,
-          itemBuilder: (context, index) {
-            return Card(
-                child: Row(
+      height: 600,
+      child: transcations.isEmpty
+          ? Column(
               children: <Widget>[
-                Container(
-                  child: Text("₹ ${transcations[index].amt.toStringAsFixed(2)}",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20)),
-                  margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  padding: EdgeInsets.all(10),
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                        color: Theme.of(context).primaryColor,
-                        style: BorderStyle.solid,
-                        width: 2),
-                  ),
+                Text(
+                  "No transcations added yet!",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                SizedBox(
+                  height: 25,
+                ),
+                Container(
+                    child: Image.asset("assets/images/zzz.png"), height: 400)
+              ],
+            )
+          : ListView.builder(
+              itemCount: transcations.length,
+              itemBuilder: (context, index) {
+                return Card(
+                    child: Row(
                   children: <Widget>[
                     Container(
-                        child: Text(
-                      transcations[index].title,
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    )),
-                    Container(
-                        child: Text(
-                      DateFormat.yMMMd().format(transcations[index].date),
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold),
-                    )),
+                      child: Text(
+                          "₹ ${transcations[index].amt.toStringAsFixed(2)}",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20)),
+                      margin:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color: Theme.of(context).primaryColor,
+                            style: BorderStyle.solid,
+                            width: 2),
+                      ),
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                            child: Text(
+                          transcations[index].title,
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
+                        )),
+                        Container(
+                            child: Text(
+                          DateFormat.yMMMd().format(transcations[index].date),
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        )),
+                      ],
+                    )
                   ],
-                )
-              ],
-            ));
-          }),
+                ));
+              }),
     );
   }
 }
