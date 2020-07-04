@@ -42,9 +42,12 @@ class _NewTranscationState extends State<NewTranscation> {
             keyboardType: TextInputType.number,
           ),
           FlatButton(
-              color: Colors.purple,
+              color: Theme.of(context).accentColor,
               onPressed: submit,
-              child: Text("Add Transcation")),
+              child: Text(
+                "Add Transcation",
+                style: TextStyle(color: Colors.black),
+              )),
         ],
       ),
     );

@@ -20,14 +20,14 @@ class TranscationList extends StatelessWidget {
                 Container(
                   child: Text("₹ ${transcations[index].amt.toStringAsFixed(2)}",
                       style: TextStyle(
-                          color: Colors.purple,
+                          color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold,
                           fontSize: 20)),
                   margin: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     border: Border.all(
-                        color: Colors.black,
+                        color: Theme.of(context).primaryColor,
                         style: BorderStyle.solid,
                         width: 2),
                   ),

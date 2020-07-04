@@ -12,6 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Expense Planner",
+      darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: Colors.teal,
+          accentColor: Colors.tealAccent,
+          fontFamily: "OpenSans"),
       home: MyAppHome(),
     );
   }
@@ -65,7 +70,7 @@ class _MyAppHomeState extends State<MyAppHome> {
           Container(
             width: double.infinity,
             child: Card(
-              color: Colors.amber,
+              //color: Theme.of(context).accentColor,
               child: Text("Chart"),
             ),
           ),
