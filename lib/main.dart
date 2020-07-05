@@ -1,3 +1,4 @@
+import 'package:Expense_Planner_App/widgets/Chart.dart';
 import 'package:flutter/material.dart';
 import './widgets/New_Transcation.dart';
 import 'models/Transcation.dart';
@@ -54,6 +55,12 @@ class _MyAppHomeState extends State<MyAppHome> {
     );
   }
 
+  List<Transcation> get _recentTranscations {
+    return _userTranscations.where((tx) {
+      return tx.date.isAfter(DateTime.now().subtract(Duration(days: 7)));
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,13 +74,7 @@ class _MyAppHomeState extends State<MyAppHome> {
       ),
       body: ListView(
         children: <Widget>[
-          Container(
-            width: double.infinity,
-            child: Card(
-              //color: Theme.of(context).accentColor,
-              child: Text("Chart"),
-            ),
-          ),
+          Chart(_recentTranscations),
           TranscationList(_userTranscations),
         ],
       ),

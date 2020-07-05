@@ -11,7 +11,6 @@ class NewTranscation extends StatefulWidget {
 
 class _NewTranscationState extends State<NewTranscation> {
   final amountInput = TextEditingController();
-
   final titleInput = TextEditingController();
 
   void submit() {
