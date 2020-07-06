@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 class TranscationList extends StatelessWidget {
   final List<Transcation> transcations;
-  Function deleteTx;
+  final Function deleteTx;
   TranscationList(this.transcations, this.deleteTx);
 
   @override
