@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 
 class TranscationList extends StatelessWidget {
   final List<Transcation> transcations;
-
-  TranscationList(this.transcations);
+  Function deleteTx;
+  TranscationList(this.transcations, this.deleteTx);
 
   @override
   Widget build(BuildContext context) {
@@ -29,46 +29,37 @@ class TranscationList extends StatelessWidget {
               itemCount: transcations.length,
               itemBuilder: (context, index) {
                 return Card(
-                    child: Row(
-                  children: <Widget>[
-                    Container(
-                      child: Text(
-                          "₹ ${transcations[index].amt.toStringAsFixed(2)}",
-                          style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20)),
-                      margin:
-                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                            color: Theme.of(context).primaryColor,
-                            style: BorderStyle.solid,
-                            width: 2),
+                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                    elevation: 5,
+                    child: ListTile(
+                      leading: CircleAvatar(
+                        radius: 30,
+                        foregroundColor: ThemeData.dark().primaryColor,
+                        backgroundColor: Theme.of(context).primaryColor,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: FittedBox(
+                              //fit: BoxFit.fill,
+                              child: Text(
+                            "₹${transcations[index].amt.toStringAsFixed(2)}",
+                            style: TextStyle(
+                                //color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          )),
+                        ),
                       ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                            child: Text(
-                          transcations[index].title,
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
-                        )),
-                        Container(
-                            child: Text(
-                          DateFormat.yMMMd().format(transcations[index].date),
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        )),
-                      ],
-                    )
-                  ],
-                ));
+                      title: Text(
+                        "${transcations[index].title}",
+                        style: TextStyle(color: Colors.white, fontSize: 25),
+                      ),
+                      subtitle: Text(
+                          "${DateFormat.yMMMd().format(transcations[index].date)}"),
+                      trailing: IconButton(
+                        color: Theme.of(context).errorColor,
+                        icon: Icon(Icons.delete),
+                        onPressed: () => deleteTx(transcations[index].id),
+                      ),
+                    ));
               }),
     );
   }

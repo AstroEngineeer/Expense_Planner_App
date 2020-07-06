@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTranscation extends StatefulWidget {
   final Function addTranscation;
@@ -12,13 +13,31 @@ class NewTranscation extends StatefulWidget {
 class _NewTranscationState extends State<NewTranscation> {
   final amountInput = TextEditingController();
   final titleInput = TextEditingController();
+  DateTime selectedDate;
+
+  void presentDatePicker() {
+    showDatePicker(
+            context: context,
+            initialDate: DateTime.now(),
+            firstDate: DateTime.now().subtract(Duration(days: 365)),
+            lastDate: DateTime.now())
+        .then((date) {
+      if (date == null) {
+        return;
+      } else {
+        setState(() {
+          selectedDate = date;
+        });
+      }
+    });
+  }
 
   void submit() {
     final amt = double.parse(amountInput.text);
-    if (amt <= 0 || titleInput.text.isEmpty) {
+    if (amt <= 0 || titleInput.text.isEmpty || selectedDate == null) {
       return;
     }
-    widget.addTranscation(titleInput.text, amt);
+    widget.addTranscation(titleInput.text, amt, selectedDate);
     Navigator.of(context).pop();
   }
 
@@ -39,6 +58,27 @@ class _NewTranscationState extends State<NewTranscation> {
             controller: amountInput,
             onSubmitted: (_) => submit(),
             keyboardType: TextInputType.number,
+          ),
+          Container(
+            height: 70,
+            child: Row(
+              children: <Widget>[
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Text(selectedDate == null
+                      ? "No Date Selected!"
+                      : "Dated picked: ${DateFormat.yMMMd().format(selectedDate)}"),
+                ),
+                FlatButton(
+                    onPressed: presentDatePicker,
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontWeight: FontWeight.bold),
+                    ))
+              ],
+            ),
           ),
           FlatButton(
               color: Theme.of(context).accentColor,

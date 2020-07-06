@@ -21,7 +21,7 @@ class Chart extends StatelessWidget {
       }
 
       return {"day": DateFormat.E().format(weekDay), "amount": totalAmt};
-    });
+    }).reversed.toList();
   }
 
   double get percentSpending {
@@ -32,7 +32,6 @@ class Chart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(dayMapedValues);
     return Card(
       margin: EdgeInsets.all(10),
       elevation: 5,
@@ -41,8 +40,10 @@ class Chart extends StatelessWidget {
           children: dayMapedValues.map((e) {
             return Flexible(
               fit: FlexFit.tight,
-              child: ChartBar(e['amount'],
-                  (e['amount'] as double) / percentSpending, e['day']),
+              child: percentSpending == 0
+                  ? ChartBar(e['amount'], 0, e['day'])
+                  : ChartBar(e['amount'],
+                      (e['amount'] as double) / percentSpending, e['day']),
             );
           }).toList()),
     );

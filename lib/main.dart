@@ -30,19 +30,25 @@ class MyAppHome extends StatefulWidget {
 
 class _MyAppHomeState extends State<MyAppHome> {
   final List _userTranscations = <Transcation>[
-    Transcation(id: "t1", title: "Pizza", amt: 500, date: DateTime.now()),
-    Transcation(id: "t2", title: "Buger", amt: 100, date: DateTime.now())
+    //Transcation(id: "t1", title: "Pizza", amt: 500, date: DateTime.now()),
+    //Transcation(id: "t2", title: "Buger", amt: 100, date: DateTime.now())
   ];
 
-  void _addNewTranscation(String title, double amount) {
+  void _addNewTranscation(String title, double amount, DateTime selectedDate) {
     final newtx = Transcation(
         id: DateTime.now().toString(),
         title: title,
         amt: amount,
-        date: DateTime.now());
+        date: selectedDate);
 
     setState(() {
       _userTranscations.add(newtx);
+    });
+  }
+
+  _deleteTranscations(String id) {
+    setState(() {
+      _userTranscations.removeWhere((element) => element.id == id);
     });
   }
 
@@ -75,7 +81,7 @@ class _MyAppHomeState extends State<MyAppHome> {
       body: ListView(
         children: <Widget>[
           Chart(_recentTranscations),
-          TranscationList(_userTranscations),
+          TranscationList(_userTranscations, _deleteTranscations),
         ],
       ),
       floatingActionButton: FloatingActionButton(
