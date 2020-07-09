@@ -9,58 +9,55 @@ class TranscationList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 600,
-      child: transcations.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  "No transcations added yet!",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                SizedBox(
-                  height: 25,
-                ),
-                Container(
-                    child: Image.asset("assets/images/zzz.png"), height: 400)
-              ],
-            )
-          : ListView.builder(
-              itemCount: transcations.length,
-              itemBuilder: (context, index) {
-                return Card(
-                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                    elevation: 5,
-                    child: ListTile(
-                      leading: CircleAvatar(
-                        radius: 30,
-                        foregroundColor: ThemeData.dark().primaryColor,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: FittedBox(
-                              //fit: BoxFit.fill,
-                              child: Text(
-                            "₹${transcations[index].amt.toStringAsFixed(2)}",
-                            style: TextStyle(
-                                //color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          )),
-                        ),
+    return transcations.isEmpty
+        ? Column(
+            children: <Widget>[
+              Text(
+                "No transcations added yet!",
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              SizedBox(
+                height: 25,
+              ),
+              Container(
+                  child: Image.asset("assets/images/zzz.png"), height: 300)
+            ],
+          )
+        : ListView.builder(
+            itemCount: transcations.length,
+            itemBuilder: (context, index) {
+              return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                  elevation: 5,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      foregroundColor: ThemeData.dark().primaryColor,
+                      backgroundColor: Theme.of(context).primaryColor,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: FittedBox(
+                            //fit: BoxFit.fill,
+                            child: Text(
+                          "₹${transcations[index].amt.toStringAsFixed(2)}",
+                          style: TextStyle(
+                              //color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        )),
                       ),
-                      title: Text(
-                        "${transcations[index].title}",
-                        style: TextStyle(color: Colors.white, fontSize: 25),
-                      ),
-                      subtitle: Text(
-                          "${DateFormat.yMMMd().format(transcations[index].date)}"),
-                      trailing: IconButton(
-                        color: Theme.of(context).errorColor,
-                        icon: Icon(Icons.delete),
-                        onPressed: () => deleteTx(transcations[index].id),
-                      ),
-                    ));
-              }),
-    );
+                    ),
+                    title: Text(
+                      "${transcations[index].title}",
+                      style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                    subtitle: Text(
+                        "${DateFormat.yMMMd().format(transcations[index].date)}"),
+                    trailing: IconButton(
+                      color: Theme.of(context).errorColor,
+                      icon: Icon(Icons.delete),
+                      onPressed: () => deleteTx(transcations[index].id),
+                    ),
+                  ));
+            });
   }
 }

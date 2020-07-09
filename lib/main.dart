@@ -1,10 +1,14 @@
 import 'package:Expense_Planner_App/widgets/Chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import './widgets/New_Transcation.dart';
 import 'models/Transcation.dart';
 import './widgets/Transcation_List.dart';
 
 void main(List<String> args) {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 
@@ -69,19 +73,31 @@ class _MyAppHomeState extends State<MyAppHome> {
 
   @override
   Widget build(BuildContext context) {
+    final appBar = AppBar(
+      actions: <Widget>[
+        IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => _startAddNewTranscation(context))
+      ],
+      title: Text("Expense Planner"),
+    );
+
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-              icon: Icon(Icons.add),
-              onPressed: () => _startAddNewTranscation(context))
-        ],
-        title: Text("Expense Planner"),
-      ),
+      appBar: appBar,
       body: ListView(
         children: <Widget>[
-          Chart(_recentTranscations),
-          TranscationList(_userTranscations, _deleteTranscations),
+          Container(
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.3,
+              child: Chart(_recentTranscations)),
+          Container(
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top -
+                      appBar.preferredSize.height) *
+                  0.7,
+              child: TranscationList(_userTranscations, _deleteTranscations)),
         ],
       ),
       floatingActionButton: FloatingActionButton(
