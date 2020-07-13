@@ -52,11 +52,18 @@ class TranscationList extends StatelessWidget {
                     ),
                     subtitle: Text(
                         "${DateFormat.yMMMd().format(transcations[index].date)}"),
-                    trailing: IconButton(
-                      color: Theme.of(context).errorColor,
-                      icon: Icon(Icons.delete),
-                      onPressed: () => deleteTx(transcations[index].id),
-                    ),
+                    trailing: MediaQuery.of(context).size.width > 425
+                        ? FlatButton.icon(
+                            onPressed: () => deleteTx(transcations[index].id),
+                            icon: Icon(Icons.delete),
+                            label: Text("Delete"),
+                            textColor: Theme.of(context).errorColor,
+                          )
+                        : IconButton(
+                            color: Theme.of(context).errorColor,
+                            icon: Icon(Icons.delete),
+                            onPressed: () => deleteTx(transcations[index].id),
+                          ),
                   ));
             });
   }

@@ -73,6 +73,8 @@ class _MyAppHomeState extends State<MyAppHome> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     final appBar = AppBar(
       actions: <Widget>[
         IconButton(
@@ -87,14 +89,14 @@ class _MyAppHomeState extends State<MyAppHome> {
       body: ListView(
         children: <Widget>[
           Container(
-              height: (MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
+              height: (mediaQuery.size.height -
+                      mediaQuery.padding.top -
                       appBar.preferredSize.height) *
                   0.3,
               child: Chart(_recentTranscations)),
           Container(
-              height: (MediaQuery.of(context).size.height -
-                      MediaQuery.of(context).padding.top -
+              height: (mediaQuery.size.height -
+                      mediaQuery.padding.top -
                       appBar.preferredSize.height) *
                   0.7,
               child: TranscationList(_userTranscations, _deleteTranscations)),

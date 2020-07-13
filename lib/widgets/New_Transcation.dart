@@ -43,52 +43,61 @@ class _NewTranscationState extends State<NewTranscation> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      margin: EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          TextField(
-            decoration: InputDecoration(labelText: "Title"),
-            controller: titleInput,
-            onSubmitted: (_) => submit(),
-          ),
-          TextField(
-            decoration: InputDecoration(labelText: "Amount"),
-            controller: amountInput,
-            onSubmitted: (_) => submit(),
-            keyboardType: TextInputType.number,
-          ),
-          Container(
-            height: 70,
-            child: Row(
-              children: <Widget>[
-                Flexible(
-                  fit: FlexFit.tight,
-                  child: Text(selectedDate == null
-                      ? "No Date Selected!"
-                      : "Dated picked: ${DateFormat.yMMMd().format(selectedDate)}"),
+    return SingleChildScrollView(
+      child: Card(
+        margin: EdgeInsets.only(
+            top: 5,
+            left: 5,
+            right: 5,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                decoration: InputDecoration(labelText: "Title"),
+                controller: titleInput,
+                onSubmitted: (_) => submit(),
+              ),
+              TextField(
+                decoration: InputDecoration(labelText: "Amount"),
+                controller: amountInput,
+                onSubmitted: (_) => submit(),
+                keyboardType: TextInputType.number,
+              ),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Flexible(
+                      fit: FlexFit.tight,
+                      child: Text(selectedDate == null
+                          ? "No Date Selected!"
+                          : "Dated picked: ${DateFormat.yMMMd().format(selectedDate)}"),
+                    ),
+                    FlatButton(
+                        onPressed: presentDatePicker,
+                        child: Text(
+                          "Choose Date",
+                          style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontWeight: FontWeight.bold),
+                        ))
+                  ],
                 ),
-                FlatButton(
-                    onPressed: presentDatePicker,
-                    child: Text(
-                      "Choose Date",
-                      style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontWeight: FontWeight.bold),
-                    ))
-              ],
-            ),
+              ),
+              FlatButton(
+                  color: Theme.of(context).accentColor,
+                  onPressed: submit,
+                  child: Text(
+                    "Add Transcation",
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.bold),
+                  )),
+            ],
           ),
-          FlatButton(
-              color: Theme.of(context).accentColor,
-              onPressed: submit,
-              child: Text(
-                "Add Transcation",
-                style:
-                    TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-              )),
-        ],
+        ),
       ),
     );
   }
