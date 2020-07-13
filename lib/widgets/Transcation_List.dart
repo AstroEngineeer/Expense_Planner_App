@@ -1,5 +1,6 @@
 import 'package:Expense_Planner_App/models/Transcation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:intl/intl.dart';
 
 class TranscationList extends StatelessWidget {
@@ -10,19 +11,23 @@ class TranscationList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return transcations.isEmpty
-        ? Column(
-            children: <Widget>[
-              Text(
-                "No transcations added yet!",
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Container(
-                  child: Image.asset("assets/images/zzz.png"), height: 300)
-            ],
-          )
+        ? LayoutBuilder(builder: (ctx, constraints) {
+            return Column(
+              children: <Widget>[
+                Text(
+                  "No transcations added yet!",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                SizedBox(
+                  height: 25,
+                ),
+                Container(
+                  child: Image.asset("assets/images/zzz.png"),
+                  height: constraints.maxHeight * 0.7,
+                )
+              ],
+            );
+          })
         : ListView.builder(
             itemCount: transcations.length,
             itemBuilder: (context, index) {

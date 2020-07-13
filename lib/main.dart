@@ -1,14 +1,17 @@
-import 'package:Expense_Planner_App/widgets/Chart.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import './widgets/New_Transcation.dart';
+
 import 'models/Transcation.dart';
+import './widgets/Chart.dart';
+import './widgets/New_Transcation.dart';
 import './widgets/Transcation_List.dart';
 
 void main(List<String> args) {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
+  //WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  // [DeviceOrientation.portraitDown, DeviceOrientation.portraitUp]);
   runApp(MyApp());
 }
 
@@ -33,6 +36,8 @@ class MyAppHome extends StatefulWidget {
 }
 
 class _MyAppHomeState extends State<MyAppHome> {
+  bool _showChart = false;
+
   final List _userTranscations = <Transcation>[
     //Transcation(id: "t1", title: "Pizza", amt: 500, date: DateTime.now()),
     //Transcation(id: "t2", title: "Buger", amt: 100, date: DateTime.now())
@@ -74,6 +79,8 @@ class _MyAppHomeState extends State<MyAppHome> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final isLandScape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     final appBar = AppBar(
       actions: <Widget>[
@@ -83,29 +90,57 @@ class _MyAppHomeState extends State<MyAppHome> {
       ],
       title: Text("Expense Planner"),
     );
+    final txList = Container(
+        height: (mediaQuery.size.height -
+                mediaQuery.padding.top -
+                appBar.preferredSize.height) *
+            0.7,
+        child: TranscationList(_userTranscations, _deleteTranscations));
 
     return Scaffold(
       appBar: appBar,
       body: ListView(
         children: <Widget>[
-          Container(
-              height: (mediaQuery.size.height -
-                      mediaQuery.padding.top -
-                      appBar.preferredSize.height) *
-                  0.3,
-              child: Chart(_recentTranscations)),
-          Container(
-              height: (mediaQuery.size.height -
-                      mediaQuery.padding.top -
-                      appBar.preferredSize.height) *
-                  0.7,
-              child: TranscationList(_userTranscations, _deleteTranscations)),
+          if (isLandScape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Show Chart"),
+                Switch.adaptive(
+                    activeColor: Theme.of(context).accentColor,
+                    value: _showChart,
+                    onChanged: (val) {
+                      setState(() {
+                        _showChart = val;
+                      });
+                    })
+              ],
+            ),
+          if (isLandScape)
+            _showChart
+                ? Container(
+                    height: (mediaQuery.size.height -
+                            mediaQuery.padding.top -
+                            appBar.preferredSize.height) *
+                        0.7,
+                    child: Chart(_recentTranscations))
+                : txList,
+          if (!isLandScape)
+            Container(
+                height: (mediaQuery.size.height -
+                        mediaQuery.padding.top -
+                        appBar.preferredSize.height) *
+                    0.3,
+                child: Chart(_recentTranscations)),
+          if (!isLandScape) txList
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _startAddNewTranscation(context),
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+              onPressed: () => _startAddNewTranscation(context),
+              child: Icon(Icons.add),
+            ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
