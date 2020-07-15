@@ -1,7 +1,7 @@
 import 'package:Expense_Planner_App/models/Transcation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import './TranscationItem.dart';
+import 'Transcation_Item.dart';
 
 class TranscationList extends StatelessWidget {
   final List<Transcation> transcations;
