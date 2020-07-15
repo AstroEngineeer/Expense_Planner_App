@@ -14,11 +14,11 @@ class TranscationList extends StatelessWidget {
         ? LayoutBuilder(builder: (ctx, constraints) {
             return Column(
               children: <Widget>[
-                Text(
+                const Text(
                   "No transcations added yet!",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 25,
                 ),
                 Container(
@@ -60,13 +60,13 @@ class TranscationList extends StatelessWidget {
                     trailing: MediaQuery.of(context).size.width > 425
                         ? FlatButton.icon(
                             onPressed: () => deleteTx(transcations[index].id),
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             label: Text("Delete"),
                             textColor: Theme.of(context).errorColor,
                           )
                         : IconButton(
                             color: Theme.of(context).errorColor,
-                            icon: Icon(Icons.delete),
+                            icon: const Icon(Icons.delete),
                             onPressed: () => deleteTx(transcations[index].id),
                           ),
                   ));

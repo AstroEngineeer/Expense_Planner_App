@@ -76,6 +76,31 @@ class _MyAppHomeState extends State<MyAppHome> {
     }).toList();
   }
 
+  Widget builderLandscape(
+      MediaQueryData mediaQuery, AppBar appBar, Container txList) {
+    return _showChart
+        ? Container(
+            height: (mediaQuery.size.height -
+                    mediaQuery.padding.top -
+                    appBar.preferredSize.height) *
+                0.7,
+            child: Chart(_recentTranscations))
+        : txList;
+  }
+
+  List<Widget> builderPotrait(
+      MediaQueryData mediaQuery, AppBar appBar, Container txList) {
+    return [
+      Container(
+          height: (mediaQuery.size.height -
+                  mediaQuery.padding.top -
+                  appBar.preferredSize.height) *
+              0.3,
+          child: Chart(_recentTranscations)),
+      txList
+    ];
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -85,17 +110,19 @@ class _MyAppHomeState extends State<MyAppHome> {
     final appBar = AppBar(
       actions: <Widget>[
         IconButton(
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
             onPressed: () => _startAddNewTranscation(context))
       ],
-      title: Text("Expense Planner"),
+      title: const Text("Expense Planner"),
     );
+
     final txList = Container(
-        height: (mediaQuery.size.height -
-                mediaQuery.padding.top -
-                appBar.preferredSize.height) *
-            0.7,
-        child: TranscationList(_userTranscations, _deleteTranscations));
+      height: (mediaQuery.size.height -
+              mediaQuery.padding.top -
+              appBar.preferredSize.height) *
+          0.7,
+      child: TranscationList(_userTranscations, _deleteTranscations),
+    );
 
     return Scaffold(
       appBar: appBar,
@@ -105,7 +132,7 @@ class _MyAppHomeState extends State<MyAppHome> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Text("Show Chart"),
+                const Text("Show Chart"),
                 Switch.adaptive(
                     activeColor: Theme.of(context).accentColor,
                     value: _showChart,
@@ -116,30 +143,15 @@ class _MyAppHomeState extends State<MyAppHome> {
                     })
               ],
             ),
-          if (isLandScape)
-            _showChart
-                ? Container(
-                    height: (mediaQuery.size.height -
-                            mediaQuery.padding.top -
-                            appBar.preferredSize.height) *
-                        0.7,
-                    child: Chart(_recentTranscations))
-                : txList,
-          if (!isLandScape)
-            Container(
-                height: (mediaQuery.size.height -
-                        mediaQuery.padding.top -
-                        appBar.preferredSize.height) *
-                    0.3,
-                child: Chart(_recentTranscations)),
-          if (!isLandScape) txList
+          if (isLandScape) builderLandscape(mediaQuery, appBar, txList),
+          if (!isLandScape) ...builderPotrait(mediaQuery, appBar, txList),
         ],
       ),
       floatingActionButton: Platform.isIOS
           ? Container()
           : FloatingActionButton(
               onPressed: () => _startAddNewTranscation(context),
-              child: Icon(Icons.add),
+              child: const Icon(Icons.add),
             ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );

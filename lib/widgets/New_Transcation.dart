@@ -90,7 +90,7 @@ class _NewTranscationState extends State<NewTranscation> {
               FlatButton(
                   color: Theme.of(context).accentColor,
                   onPressed: submit,
-                  child: Text(
+                  child: const Text(
                     "Add Transcation",
                     style: TextStyle(
                         color: Colors.black, fontWeight: FontWeight.bold),

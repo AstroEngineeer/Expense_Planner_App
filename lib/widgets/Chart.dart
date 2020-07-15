@@ -6,7 +6,7 @@ import './Chart_Bar.dart';
 class Chart extends StatelessWidget {
   final List<Transcation> recentTranscations;
 
-  Chart(this.recentTranscations);
+  const Chart(this.recentTranscations);
 
   List<Map<String, Object>> get dayMapedValues {
     return List.generate(7, (index) {
