@@ -76,16 +76,32 @@ class _MyAppHomeState extends State<MyAppHome> {
     }).toList();
   }
 
-  Widget builderLandscape(
+  List<Widget> builderLandscape(
       MediaQueryData mediaQuery, AppBar appBar, Container txList) {
-    return _showChart
-        ? Container(
-            height: (mediaQuery.size.height -
-                    mediaQuery.padding.top -
-                    appBar.preferredSize.height) *
-                0.7,
-            child: Chart(_recentTranscations))
-        : txList;
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          const Text("Show Chart"),
+          Switch.adaptive(
+              activeColor: Theme.of(context).accentColor,
+              value: _showChart,
+              onChanged: (val) {
+                setState(() {
+                  _showChart = val;
+                });
+              })
+        ],
+      ),
+      _showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      mediaQuery.padding.top -
+                      appBar.preferredSize.height) *
+                  0.7,
+              child: Chart(_recentTranscations))
+          : txList
+    ];
   }
 
   List<Widget> builderPotrait(
@@ -104,6 +120,7 @@ class _MyAppHomeState extends State<MyAppHome> {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+
     final isLandScape =
         MediaQuery.of(context).orientation == Orientation.landscape;
 
@@ -128,22 +145,7 @@ class _MyAppHomeState extends State<MyAppHome> {
       appBar: appBar,
       body: ListView(
         children: <Widget>[
-          if (isLandScape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                const Text("Show Chart"),
-                Switch.adaptive(
-                    activeColor: Theme.of(context).accentColor,
-                    value: _showChart,
-                    onChanged: (val) {
-                      setState(() {
-                        _showChart = val;
-                      });
-                    })
-              ],
-            ),
-          if (isLandScape) builderLandscape(mediaQuery, appBar, txList),
+          if (isLandScape) ...builderLandscape(mediaQuery, appBar, txList),
           if (!isLandScape) ...builderPotrait(mediaQuery, appBar, txList),
         ],
       ),
