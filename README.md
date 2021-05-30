@@ -1,6 +1,6 @@
 # Expense_Planner_App
 
-A new Flutter project.
+An expense planner app developed using flutter.
 
 ## Getting Started
 
